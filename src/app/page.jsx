@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Form from "./pages/main/page";
+import Form from "./main/page";
 
 export default function Home() {
   return (
