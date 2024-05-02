@@ -1,35 +1,25 @@
-//import Reportscore from "@/components/Reportscore";
-//import drreport from "./dr_dk.json";
-export const revalidate = 1800;
-//import Reporttitle from "@/components/Reporttitle";
-//import Card from "@/components/Card";
-//import Card2 from "@/components/Card2";
-//import Reportimage from "@/components/Reportimage";
+import React from "react";
 import Reportfull from "@/components/Reportfull";
 import Retry from "@/components/Retry";
 import Link from "next/link";
 
+export const revalidate = 1800;
+
 export default async function Report({ searchParams }) {
-  //local test env
-  //const data =  drreport;
-  // console.log(data);
-  "use server";
   const params = new URLSearchParams(searchParams);
-  const response = await fetch(`https://mmd-a11y-api.vercel.app/api/scan?${params.toString()}`);
-  const data = await response.json();
+  const respons = await fetch(`https://mmd-a11y-api.vercel.app/api/scan?${params.toString()}`);
+  const data = await respons.json();
   console.log(data);
-  if (data.url[0] == "Invalid URL") {
+
+  if (data.url[0] === "Ugyldig URL" || "fejl" in data) {
     return <Retry />;
   }
 
-  if ("error" in data) {
-    return <Retry />;
-  }
   return (
     <>
-      <div className="w-full text-center">
-        <Link className="text-8xl text-center font-semibold text-brand-orange70 w-full" href="/">
-          DIVERSA
+      <div>
+        <Link href="/">
+          <a>DIVERSA</a>
         </Link>
       </div>
       <Reportfull data={data} />
